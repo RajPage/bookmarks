@@ -1,8 +1,8 @@
 package server
 
 import (
-	"bookmarks/server/common"
 	"bookmarks/server/common/logger"
+	"bookmarks/server/config"
 	"context"
 	"os"
 	"strconv"
@@ -10,8 +10,19 @@ import (
 	"github.com/rs/zerolog"
 )
 
+func initServer() {
+	config.InitializeConfig()
+	startLogger()
+	// context
+	// db
+	// Set keys
+	// Middleware
+	// routes
+	// swagger (for dev)
+}
+
 func startLogger() {
-	logLevel := common.GetEnvValue("BOOKMARKS_SERVER_LOG_LEVEL")
+	logLevel := config.GetConfig().LogLevel
 	level, err := strconv.Atoi(logLevel)
 	if err != nil {
 		level = int(zerolog.InfoLevel)
@@ -27,16 +38,9 @@ func startLogger() {
 
 func Start() {
 	ctx := context.Background()
-	startLogger()
 
-	// config
-	// context
-	// db
-	// Set keys
-	// Middleware
-	// routes
-	// swagger (for dev)
+	initServer()
+
 	log := logger.GetLogger()
 	log.Info(ctx, "Starting server...")
-	// start server
 }
