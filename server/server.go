@@ -10,6 +10,7 @@ import (
 	"github.com/rs/zerolog"
 )
 
+// initServer initializes the server by setting up the magic
 func initServer() {
 	config.InitializeConfig()
 	startLogger()
@@ -24,6 +25,7 @@ func initServer() {
 	// swagger (for dev)
 }
 
+// startLogger initializes the logger based on the configuration.
 func startLogger() {
 	logLevel := config.GetConfig().LogLevel
 	level, err := strconv.Atoi(logLevel)
@@ -37,6 +39,7 @@ func startLogger() {
 	})
 }
 
+// Start starts the server.
 func Start() {
 	ctx := context.Background()
 
