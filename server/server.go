@@ -3,39 +3,43 @@ package server
 import (
 	"bookmarks/server/common/logger"
 	"bookmarks/server/config"
+	"bookmarks/server/internal/model"
 	"context"
-	"os"
 	"strconv"
 
 	"github.com/rs/zerolog"
 )
 
+// initServer initializes the server by setting up the magic
 func initServer() {
 	config.InitializeConfig()
 	startLogger()
+
+	dsn := config.GetConfig().DbDsn
+	model.InitializeDatabase(dsn)
+
 	// context
-	// db
 	// Set keys
 	// Middleware
 	// routes
 	// swagger (for dev)
 }
 
+// startLogger initializes the logger based on the configuration.
 func startLogger() {
 	logLevel := config.GetConfig().LogLevel
 	level, err := strconv.Atoi(logLevel)
 	if err != nil {
 		level = int(zerolog.InfoLevel)
 	}
-	consoleExporter := &logger.ConsoleExporter{
-		Zlog: zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout}).With().Timestamp().Logger(),
-	}
+	consoleExporter := logger.NewExporter(logger.FlavorConsole, logger.Level(level))
 	logger.InitializeLogger(logger.Config{
 		MinLevel:  logger.Level(level),
 		Exporters: []logger.Exporter{consoleExporter},
 	})
 }
 
+// Start starts the server.
 func Start() {
 	ctx := context.Background()
 

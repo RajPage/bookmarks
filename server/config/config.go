@@ -10,6 +10,7 @@ type Config struct {
 	Environment string
 	LogLevel    string
 	Port        string
+	DbDsn       string
 }
 
 var (
@@ -22,6 +23,7 @@ func InitializeConfig() *Config {
 		singletonConfig = &Config{
 			Environment: common.GetEnvValue(environment.EnvServerEnvironment),
 			LogLevel:    common.GetEnvValue(environment.EnvServerLogLevel),
+			DbDsn:       common.GetEnvValue(environment.EnvDbDsn),
 			// Port:        common.GetEnvValue(environment.EnvServerPort),
 		}
 	})
