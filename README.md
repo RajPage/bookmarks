@@ -17,7 +17,12 @@ Work in Progress.
     CREATE DATABASE bookmarks; 
     GRANT ALL PRIVILEGES ON DATABASE bookmarks TO bookmarks; 
     ```
-3. Run the server
+3. Set env variables
+    ```ini
+    BOOKMARKS_SERVER_ENVIRONMENT="development"
+    EnvDbDsn="host=localhost user=bookmarks password=bookmarks dbname=bookmarks port=5432 sslmode=disable TimeZone=Asia/Kolkata"
+    ```
+4. Run the server
     ```bash
     go run main.go
     ```

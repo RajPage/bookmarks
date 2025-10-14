@@ -28,3 +28,7 @@ func (l *Logger) Log(ctx context.Context, level Level, msg string) {
 	entry := l.processor.Process(ctx, level, msg)
 	l.processor.Export(entry)
 }
+
+func (l *Logger) GetLogLevel() Level {
+	return l.processor.minLevel
+}

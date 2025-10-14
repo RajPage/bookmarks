@@ -3,6 +3,7 @@ package server
 import (
 	"bookmarks/server/common/logger"
 	"bookmarks/server/config"
+	"bookmarks/server/internal/model"
 	"context"
 	"strconv"
 
@@ -12,8 +13,11 @@ import (
 func initServer() {
 	config.InitializeConfig()
 	startLogger()
+
+	dsn := config.GetConfig().DbDsn
+	model.InitializeDatabase(dsn)
+
 	// context
-	// db
 	// Set keys
 	// Middleware
 	// routes
