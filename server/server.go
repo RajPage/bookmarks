@@ -4,7 +4,6 @@ import (
 	"bookmarks/server/common/logger"
 	"bookmarks/server/config"
 	"context"
-	"os"
 	"strconv"
 
 	"github.com/rs/zerolog"
@@ -27,9 +26,7 @@ func startLogger() {
 	if err != nil {
 		level = int(zerolog.InfoLevel)
 	}
-	consoleExporter := &logger.ConsoleExporter{
-		Zlog: zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout}).With().Timestamp().Logger(),
-	}
+	consoleExporter := logger.NewExporter(logger.FlavorConsole, logger.Level(level))
 	logger.InitializeLogger(logger.Config{
 		MinLevel:  logger.Level(level),
 		Exporters: []logger.Exporter{consoleExporter},
