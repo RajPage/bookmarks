@@ -1,6 +1,8 @@
 package logger
 
-import "sync"
+import (
+	"sync"
+)
 
 type Config struct {
 	MinLevel  Level

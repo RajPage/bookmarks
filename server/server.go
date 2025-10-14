@@ -1,30 +1,37 @@
 package server
 
 import (
+	"bookmarks/server/common"
 	"bookmarks/server/common/logger"
 	"context"
 	"os"
+	"strconv"
 
 	"github.com/rs/zerolog"
 )
 
-func Start() {
-	ctx := context.TODO()
-
+func startLogger() {
+	logLevel := common.GetEnvValue("BOOKMARKS_SERVER_LOG_LEVEL")
+	level, err := strconv.Atoi(logLevel)
+	if err != nil {
+		level = int(zerolog.InfoLevel)
+	}
 	consoleExporter := &logger.ConsoleExporter{
 		Zlog: zerolog.New(zerolog.ConsoleWriter{Out: os.Stdout}).With().Timestamp().Logger(),
 	}
-
 	logger.InitializeLogger(logger.Config{
-		MinLevel:  logger.DEBUG,
+		MinLevel:  logger.Level(level),
 		Exporters: []logger.Exporter{consoleExporter},
 	})
+}
+
+func Start() {
+	ctx := context.Background()
+	startLogger()
 
 	// config
-	// logger
 	// context
 	// db
-	// check env vars
 	// Set keys
 	// Middleware
 	// routes
